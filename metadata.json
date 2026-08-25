@@ -1,0 +1,7 @@
+{
+  "name": "BNCC Cadet Database & Management System",
+  "description": "Comprehensive Cadet Database & Management System for Cox's Bazar City College BNCC Platoon (Army Wing, Karnafuli Regiment) with authentic batches (2023, 2024, 2025), offline persistence, attendance tracking, ID card generator, certificates, and reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
