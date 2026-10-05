@@ -32,7 +32,7 @@ export interface UserAccount {
 
 export type BloodGroup = 'A+' | 'A-' | 'B+' | 'B-' | 'O+' | 'O-' | 'AB+' | 'AB-';
 export type Gender = 'Male' | 'Female' | 'Other';
-export type CadetStatus = 'Active' | 'Inactive' | 'Alumni' | 'Probation';
+export type CadetStatus = 'Active' | 'Inactive' | 'Alumni' | 'Probation' | 'Ex Cadet';
 export type CadetRank = 
   | 'Cadet' 
   | 'CADET'

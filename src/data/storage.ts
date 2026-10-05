@@ -10,6 +10,7 @@ import {
   RankHistoryEntry,
   UserAccount,
   CadetRank,
+  CadetStatus,
   AdminRole
 } from '../types';
 import {
@@ -24,7 +25,7 @@ import {
 } from './seedData';
 
 const KEYS = {
-  VERSION: 'bncc_version_v6_enterprise',
+  VERSION: 'bncc_version_v8_kader_active',
   CADETS: 'bncc_cadets',
   ATTENDANCE: 'bncc_attendance',
   EVENTS: 'bncc_events',
@@ -43,17 +44,44 @@ export const storage = {
       const data = localStorage.getItem(KEYS.CADETS);
       
       // Auto-migrate or initialize if version changed or no data
-      if (!data || v !== '6.0') {
-        localStorage.setItem(KEYS.VERSION, '6.0');
-        this.saveCadets(INITIAL_CADETS);
-        this.saveCertificates(INITIAL_CERTIFICATES);
-        this.saveRankHistory(INITIAL_RANK_HISTORY);
-        this.saveUsers(INITIAL_USERS);
-        return INITIAL_CADETS;
+      if (!data || v !== '8.0') {
+        localStorage.setItem(KEYS.VERSION, '8.0');
+        let cadetsToSave = INITIAL_CADETS;
+        if (data) {
+          try {
+            const existingCadets: Cadet[] = JSON.parse(data);
+            cadetsToSave = existingCadets.map((c) => {
+              if (c.cadetNo === '24154353' || c.fullName.includes('Kader')) {
+                return { ...c, status: 'Active' as CadetStatus };
+              }
+              if (c.batch === '2023' || c.batch === '2024') {
+                return { ...c, status: 'Ex Cadet' as CadetStatus };
+              }
+              return c;
+            });
+          } catch {
+            cadetsToSave = INITIAL_CADETS;
+          }
+        }
+        this.saveCadets(cadetsToSave);
+        if (!localStorage.getItem(KEYS.CERTIFICATES)) this.saveCertificates(INITIAL_CERTIFICATES);
+        if (!localStorage.getItem(KEYS.RANK_HISTORY)) this.saveRankHistory(INITIAL_RANK_HISTORY);
+        if (!localStorage.getItem(KEYS.USERS)) this.saveUsers(INITIAL_USERS);
+        return includeSoftDeleted ? cadetsToSave : cadetsToSave.filter((c) => !c.deletedAt);
       }
       const parsed: Cadet[] = JSON.parse(data);
-      if (includeSoftDeleted) return parsed;
-      return parsed.filter((c) => !c.deletedAt);
+      // Ensure Mr Kader is Active and other 2023/2024 batches have Ex Cadet status
+      const normalized = parsed.map((c) => {
+        if (c.cadetNo === '24154353' || c.fullName.includes('Kader')) {
+          return { ...c, status: 'Active' as CadetStatus };
+        }
+        if ((c.batch === '2023' || c.batch === '2024') && c.status === 'Active') {
+          return { ...c, status: 'Ex Cadet' as CadetStatus };
+        }
+        return c;
+      });
+      if (includeSoftDeleted) return normalized;
+      return normalized.filter((c) => !c.deletedAt);
     } catch (e) {
       console.error('Error reading cadets from localStorage', e);
       return INITIAL_CADETS;

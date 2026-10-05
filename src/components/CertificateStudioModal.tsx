@@ -34,7 +34,7 @@ export const CertificateStudioModal: React.FC<CertificateStudioModalProps> = ({
   const [certNo, setCertNo] = useState<string>(
     `BNCC-${new Date().getFullYear()}-ATC-${Math.floor(100 + Math.random() * 900)}`
   );
-  const [issuingOrg, setIssuingOrg] = useState<string>('Karnafuli Regiment, BNCC');
+  const [issuingOrg, setIssuingOrg] = useState<string>('15 BNCC Battalion, Karnafuli Regiment, BNCC');
   const [signedBy, setSignedBy] = useState<string>('Lt. Colonel M. Rahman, Regiment Commander');
   const [grade, setGrade] = useState<string>('A+ (Distinction)');
   const [description, setDescription] = useState<string>(

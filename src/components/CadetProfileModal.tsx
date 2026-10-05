@@ -180,6 +180,9 @@ export const CadetProfileModal: React.FC<CadetProfileModalProps> = ({
               src={cadet.photoUrl}
               alt={cadet.fullName}
               referrerPolicy="no-referrer"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(cadet.fullName)}&background=0f172a&color=f59e0b&bold=true`;
+              }}
               className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-amber-400/40 shadow-xl"
             />
             <span className="absolute -bottom-2 -right-2 px-2 py-0.5 rounded-full text-[10px] font-bold font-mono bg-red-600 text-white border border-white/20 shadow">
@@ -198,7 +201,15 @@ export const CadetProfileModal: React.FC<CadetProfileModalProps> = ({
               <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30">
                 Batch: {cadet.batch}
               </span>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <span
+                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                  cadet.status === 'Ex Cadet' || cadet.status === 'Alumni'
+                    ? 'bg-amber-400/20 text-amber-300 border-amber-400/30'
+                    : cadet.status === 'Active'
+                    ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                    : 'bg-zinc-500/20 text-zinc-300 border-zinc-500/30'
+                }`}
+              >
                 ● {cadet.status}
               </span>
             </div>

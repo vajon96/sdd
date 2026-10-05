@@ -150,8 +150,8 @@ export const MilitaryIdCardModal: React.FC<MilitaryIdCardModalProps> = ({
                     </p>
                   </div>
                 </div>
-                <span className="px-1.5 py-0.5 rounded text-[8px] font-mono font-bold bg-amber-400 text-slate-950">
-                  {selectedCadet.batch}
+                <span className="px-1.5 py-0.5 rounded text-[8px] font-mono font-bold bg-amber-400 text-slate-950 uppercase">
+                  {selectedCadet.status === 'Ex Cadet' ? `BATCH ${selectedCadet.batch} · EX-CADET` : `BATCH ${selectedCadet.batch}`}
                 </span>
               </div>
 
@@ -162,6 +162,9 @@ export const MilitaryIdCardModal: React.FC<MilitaryIdCardModalProps> = ({
                     src={selectedCadet.photoUrl}
                     alt={selectedCadet.fullName}
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedCadet.fullName)}&background=0f172a&color=f59e0b&bold=true`;
+                    }}
                     className="w-16 h-20 rounded-lg object-cover border border-amber-400/50 shadow-md"
                   />
                   <span className="absolute -bottom-1 -right-1 px-1 py-0.2 rounded font-mono text-[8px] font-bold bg-red-600 text-white">

@@ -86,7 +86,7 @@ export const CertificateVerificationDesk: React.FC<CertificateVerificationDeskPr
               Institutional Certificate Verification Desk
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-              Verify official merit certificates, training credentials, and awards issued by Bangladesh National Cadet Corps (BNCC) Karnafuli Regiment & 5 BNCC Battalion.
+              Verify official merit certificates, training credentials, and awards issued by Bangladesh National Cadet Corps (BNCC) Karnafuli Regiment & 15 BNCC Battalion (১৫ বিএনসিসি ব্যাটালিয়ন, কর্ণফুলী রেজিমেন্ট).
             </p>
           </div>
 

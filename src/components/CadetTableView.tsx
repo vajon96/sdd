@@ -277,6 +277,7 @@ export const CadetTableView: React.FC<CadetTableViewProps> = ({
             >
               <option value="All">All Statuses</option>
               <option value="Active">Active</option>
+              <option value="Ex Cadet">Ex Cadet</option>
               <option value="Inactive">Inactive</option>
               <option value="Alumni">Alumni</option>
             </select>
@@ -387,6 +388,9 @@ export const CadetTableView: React.FC<CadetTableViewProps> = ({
                           src={cadet.photoUrl}
                           alt={cadet.fullName}
                           referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(cadet.fullName)}&background=0f172a&color=f59e0b&bold=true`;
+                          }}
                           className="w-9 h-9 rounded-full object-cover border border-white/15 shadow-sm group-hover:scale-105 transition-transform"
                         />
                       </td>
@@ -431,6 +435,8 @@ export const CadetTableView: React.FC<CadetTableViewProps> = ({
                           className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border ${
                             cadet.status === 'Active'
                               ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                              : cadet.status === 'Ex Cadet' || cadet.status === 'Alumni'
+                              ? 'bg-amber-400/15 text-amber-300 border-amber-400/30 font-bold'
                               : 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'
                           }`}
                         >

@@ -573,6 +573,7 @@ export const CadetFormModal: React.FC<CadetFormModalProps> = ({
                     className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-emerald-400 font-bold focus:outline-none focus:border-amber-400"
                   >
                     <option value="Active">Active</option>
+                    <option value="Ex Cadet">Ex Cadet</option>
                     <option value="Inactive">Inactive</option>
                     <option value="Alumni">Alumni</option>
                     <option value="Probation">Probation</option>

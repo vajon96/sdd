@@ -45,7 +45,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 }) => {
   const totalCadets = cadets.length;
   const activeCadets = cadets.filter((c) => c.status === 'Active').length;
-  const inactiveCadets = cadets.filter((c) => c.status !== 'Active').length;
+  const exCadets = cadets.filter((c) => c.status === 'Ex Cadet' || c.status === 'Alumni').length;
+  const inactiveCadets = cadets.filter((c) => c.status !== 'Active' && c.status !== 'Ex Cadet' && c.status !== 'Alumni').length;
   const maleCadets = cadets.filter((c) => c.gender === 'Male').length;
   const femaleCadets = cadets.filter((c) => c.gender === 'Female').length;
 
@@ -206,9 +207,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             {totalCadets}
           </div>
-          <div className="flex items-center gap-1.5 mt-2 text-xs text-emerald-400 font-medium">
-            <TrendingUp className="w-3.5 h-3.5" />
-            <span>{activeCadets} Active in Unit</span>
+          <div className="flex items-center gap-1.5 mt-2 text-xs font-medium">
+            <span className="text-emerald-400 flex items-center gap-1">
+              <TrendingUp className="w-3.5 h-3.5" />
+              <span>{activeCadets} Active</span>
+            </span>
+            <span className="text-white/30">·</span>
+            <span className="text-amber-300 font-semibold">{exCadets} Ex-Cadet</span>
           </div>
         </div>
 
@@ -313,7 +318,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     <span className="text-xs text-white/40">{pct}%</span>
                   </div>
                   <div className="text-xl font-extrabold text-white">{count}</div>
-                  <div className="text-[11px] text-white/50">Enrolled Cadets</div>
+                  <div className="text-[11px] text-white/50">
+                    {batch === '2023' || batch === '2024' ? (
+                      <span className="text-amber-300 font-medium">Ex-Cadets</span>
+                    ) : batch === '2025' ? (
+                      <span className="text-emerald-400 font-medium">Active Cadet</span>
+                    ) : (
+                      'Enrolled Cadets'
+                    )}
+                  </div>
                   <div className="w-full h-1.5 bg-white/10 rounded-full mt-3 overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-amber-400 to-amber-500 rounded-full"
@@ -405,6 +418,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                           src={cadet.photoUrl}
                           alt={cadet.fullName}
                           referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(cadet.fullName)}&background=0f172a&color=f59e0b&bold=true`;
+                          }}
                           className="w-7 h-7 rounded-full object-cover border border-white/10"
                         />
                         <span className="font-semibold text-white">{cadet.fullName}</span>

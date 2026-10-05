@@ -1,47 +1,48 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #020617;
-  --bg-secondary: #0b1329;
-  --glass-bg: rgba(255, 255, 255, 0.035);
-  --glass-bg-hover: rgba(255, 255, 255, 0.07);
-  --glass-bg-active: rgba(255, 255, 255, 0.1);
-  --glass-card: rgba(15, 23, 42, 0.65);
-  --glass-card-hover: rgba(30, 41, 59, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.09);
-  --glass-border-focus: rgba(251, 191, 36, 0.5);
-  --accent: #fbbf24;
-  --accent-light: #fef08a;
-  --accent-dark: #d97706;
-  --emerald: #10b981;
-  --text-dim: rgba(255, 255, 255, 0.6);
-  --text-muted: rgba(255, 255, 255, 0.4);
+  --bg-primary: #030712;
+  --bg-secondary: #0b1120;
+  --sand: #e2b16a;
+  --sand-light: #fef08a;
+  --sand-dark: #b45309;
+  --bd-red: #dc2626;
+  --bd-green: #059669;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-bg-hover: rgba(255, 255, 255, 0.06);
+  --glass-card: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-focus: rgba(226, 177, 106, 0.6);
 }
 
 body {
   background-color: var(--bg-primary);
-  color: #ffffff;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
+  letter-spacing: -0.01em;
 }
 
-/* Frosted glass mesh background */
-.mesh-bg {
+/* Tactical Background Grid & Orbs */
+.tactical-mesh-bg {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   z-index: -1;
   background: 
-    radial-gradient(circle at 15% 20%, rgba(30, 58, 138, 0.25) 0%, transparent 45%),
-    radial-gradient(circle at 85% 15%, rgba(180, 83, 9, 0.15) 0%, transparent 40%),
-    radial-gradient(circle at 50% 80%, rgba(15, 23, 42, 0.8) 0%, transparent 60%),
-    radial-gradient(circle at 80% 85%, rgba(16, 185, 129, 0.12) 0%, transparent 45%),
-    #020617;
+    radial-gradient(circle at 10% 15%, rgba(226, 177, 106, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(5, 150, 105, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(30, 58, 138, 0.15) 0%, transparent 60%),
+    #030712;
   pointer-events: none;
+}
+
+.tactical-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
 }
 
 /* Glassmorphic utilities */
@@ -60,16 +61,16 @@ body {
 }
 
 .glass-input {
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(15, 23, 42, 0.75);
   border: 1px solid var(--glass-border);
   color: #ffffff;
   transition: all 0.2s ease;
 }
 
 .glass-input:focus {
-  border-color: var(--accent);
+  border-color: var(--sand);
   outline: none;
-  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
+  box-shadow: 0 0 0 2px rgba(226, 177, 106, 0.2);
 }
 
 /* Custom scrollbar */
@@ -78,14 +79,24 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(2, 6, 23, 0.5);
+  background: rgba(3, 7, 18, 0.8);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.18);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(251, 191, 36, 0.4);
+  background: rgba(226, 177, 106, 0.5);
+}
+
+/* Official Military ID Hologram Shimmer */
+@keyframes hologram {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(200%) rotate(45deg); }
+}
+
+.animate-hologram {
+  animation: hologram 4s infinite linear;
 }
 
 /* Print styling */
@@ -100,7 +111,7 @@ body {
   .print-only {
     display: block !important;
   }
-  .mesh-bg {
+  .tactical-mesh-bg {
     display: none !important;
   }
 }

@@ -22,22 +22,22 @@ export const BatchManagementView: React.FC<BatchManagementViewProps> = ({
   }[] = [
     {
       year: '2023',
-      title: 'Senior Batch (2023)',
-      description: 'Senior Cadets, Cadet Under Officers (CUO), and Sergeants leading platoon drills.',
+      title: 'Senior Ex-Cadet Batch (2023)',
+      description: 'Senior Ex-Cadets, Cadet Under Officers (CUO), and Sergeants who completed active cadet tenure.',
       theme: 'from-amber-500/20 to-orange-500/10',
       borderColor: 'border-amber-500/30'
     },
     {
       year: '2024',
-      title: 'Regimental Batch (2024)',
-      description: 'Experienced Corporals and Lance Corporals trained in BMTC, weapon handling, and camps.',
+      title: 'Batch 2024 (In-Charge & Ex-Cadets)',
+      description: 'Platoon In-Charge Mr. Kader (Active Cadet Sergeant) alongside distinguished Ex-Cadets trained in BMTC and parade drills.',
       theme: 'from-blue-500/20 to-indigo-500/10',
       borderColor: 'border-blue-500/30'
     },
     {
       year: '2025',
       title: 'Active Inflow Batch (2025)',
-      description: 'First year HSC & Degree cadets active in weekly drill formations and civil defense.',
+      description: 'First year HSC & Degree active cadets in weekly drill formations, guard of honor, and training camps.',
       theme: 'from-emerald-500/20 to-teal-500/10',
       borderColor: 'border-emerald-500/30'
     },
@@ -61,12 +61,12 @@ export const BatchManagementView: React.FC<BatchManagementViewProps> = ({
           </div>
           <h1 className="text-2xl font-extrabold text-white tracking-tight">Batch Hierarchy</h1>
           <p className="text-xs text-white/50 mt-1">
-            Categorized rosters spanning senior leadership to prospective cadet recruits.
+            Categorized rosters spanning senior Ex-Cadet cohorts (2023, 2024), Platoon In-Charge Mr. Kader (Active), to active cadets (2025).
           </p>
         </div>
 
         <div className="flex items-center gap-2 text-xs text-white/60">
-          <span className="font-mono font-bold text-amber-400">{cadets.length}</span> Total Cadets Enrolled Across All 4 Batches
+          <span className="font-mono font-bold text-amber-400">{cadets.length}</span> Total Cadets Enrolled Across All Batches
         </div>
       </div>
 
@@ -75,6 +75,7 @@ export const BatchManagementView: React.FC<BatchManagementViewProps> = ({
         {batchList.map((b) => {
           const batchCadets = cadets.filter((c) => c.batch === b.year);
           const activeCount = batchCadets.filter((c) => c.status === 'Active').length;
+          const exCadetCount = batchCadets.filter((c) => c.status === 'Ex Cadet' || c.status === 'Alumni').length;
           const maleCount = batchCadets.filter((c) => c.gender === 'Male').length;
           const femaleCount = batchCadets.filter((c) => c.gender === 'Female').length;
           const seniorCadet = batchCadets[0];
@@ -89,9 +90,23 @@ export const BatchManagementView: React.FC<BatchManagementViewProps> = ({
                   <span className="px-3 py-1 rounded-lg font-mono font-bold text-sm bg-black/40 text-amber-300 border border-white/10">
                     BATCH {b.year}
                   </span>
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    {activeCount} Active
-                  </span>
+                  {exCadetCount > 0 && activeCount === 0 ? (
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                      All Ex-Cadet ({exCadetCount})
+                    </span>
+                  ) : activeCount > 0 && exCadetCount > 0 ? (
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      {activeCount} Active (In-Charge) · {exCadetCount} Ex-Cadet
+                    </span>
+                  ) : activeCount > 0 ? (
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      {activeCount} Active
+                    </span>
+                  ) : (
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-zinc-500/20 text-zinc-300 border border-zinc-500/30">
+                      {batchCadets.length} Enrolled
+                    </span>
+                  )}
                 </div>
 
                 <h3 className="text-lg font-bold text-white tracking-tight">{b.title}</h3>
